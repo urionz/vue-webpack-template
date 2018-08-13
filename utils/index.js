@@ -4,7 +4,7 @@ const spawn = require('child_process').spawn
 
 const lintStyles = ['standard', 'airbnb', 'default']
 
-exports.sortDependencies = function sortDependencies(data) {
+exports.sortDependencies = data => {
     const packageJsonFile = path.join(
         data.inPlace ? '' : data.destDirName,
         'package.json'
@@ -16,7 +16,7 @@ exports.sortDependencies = function sortDependencies(data) {
     fs.writeFileSync(packageJsonFile, JSON.stringify(packageJson, null, 2) + '\n')
 }
 
-exports.installDependencies = function installDependencies(cwd, executable = 'npm', color) {
+exports.installDependencies = (cwd, executable = 'npm', color) => {
     console.log(`\n\n# ${color('正在安装项目依赖 ...')}`)
     console.log('# ========================\n')
     return runCommand(executable, ['install'], {
@@ -24,7 +24,7 @@ exports.installDependencies = function installDependencies(cwd, executable = 'np
     })
 }
 
-exports.runLintFix = function runLintFix(cwd, data, color) {
+exports.runLintFix = (cwd, data, color) => {
     if (data.lint && lintStyles.indexOf(data.lintConfig) !== -1) {
         console.log(
             `\n\n${color(
@@ -40,7 +40,7 @@ exports.runLintFix = function runLintFix(cwd, data, color) {
     return Promise.resolve()
 }
 
-exports.printMessage = function printMessage(data, { green, yellow }) {
+exports.printMessage = (data, { green, yellow }) => {
     const message = `
 # ${green('项目初始化完成!')}
 # ========================
@@ -56,20 +56,19 @@ exports.printMessage = function printMessage(data, { green, yellow }) {
     console.log(message)
 }
 
-function lintMsg(data) {
+const lintMsg = data => {
     return !data.autoInstall && data.lint && lintStyles.indexOf(data.lintConfig) !== -1
     ? 'npm|cnpm run lint -- --fix (或者使用yarn: yarn run lint --fix)\n ' : ''
 }
 
 
-function installMsg(data) {
+const installMsg = data => {
     return !data.autoInstall ? 'npm|cnpm install (或者使用yarn: yarn)\n ' : ''
 }
 
 function runCommand(cmd, args, options) {
     return new Promise((resolve, reject) => {
-        console.log('runCommand....', spawn)
-        const spawn = spawn(
+        const sp = spawn(
             cmd,
             args,
             Object.assign(
@@ -82,13 +81,13 @@ function runCommand(cmd, args, options) {
             )
         )
 
-        spawn.on('exit', () => {
+        sp.on('exit', () => {
             resolve()
         })
     })
 }
 
-function sortObject(object) {
+const sortObject = object => {
     const sortedObject = {}
     Object.keys(object).sort().forEach(item => {
         sortedObject[item] = object[item]
