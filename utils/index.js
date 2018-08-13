@@ -68,6 +68,7 @@ const installMsg = data => {
 
 const runCommand = (cmd, args, options) => {
     return new Promise((resolve, reject) => {
+        console.log('runCommand....', spawn)
         const spawn = spawn(
             cmd,
             args,
