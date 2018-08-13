@@ -162,7 +162,7 @@ module.exports = {
         "padded-blocks": [2, "never"], // 块内行首行尾是否空行
         "quote-props": 0, // 对象字面量中属性名加引号
         "quotes": [1, "single", "avoid-escape"], // 引号风格
-        "semi": [2, "always"], // 强制语句分号结尾
+        "semi": [2, "never"], // 强制语句不需要分号结尾
         "semi-spacing": [2, {"before": false, "after": true}], // 分后前后空格
         "sort-vars": 0, // 变量声明时排序
         "space-before-blocks": [2, "always"], // 块前的空格
@@ -179,6 +179,7 @@ module.exports = {
         "max-statements": 0, // 函数内最多有几个声明
         "no-bitwise": 0, // 不允许使用位运算符
         "no-plusplus": 0, // 不允许使用++ --运算符
+        'indent': [2, 4, { 'SwitchCase': 1 }], // 缩进风格 4空格
         {{/if_eq}}
         {{#if_eq lintConfig "standard"}}
         'generator-star-spacing': 'off', // 允许 async-await
