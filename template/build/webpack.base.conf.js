@@ -45,6 +45,9 @@ module.exports = {
     },
     module: {
         rules: [
+            {{#lint}}
+            ...(config.dev.useEslint ? [createLintingRule()] : []),
+            {{/lint}}
             {
                 test: /\.vue$/,
                 loader: 'happypack/loader?id=vue'

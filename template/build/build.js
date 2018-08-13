@@ -15,14 +15,18 @@ const spinner = ora('正在构建生产环境....')
 spinner.start()
 
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), error => {
-    if (error) throw error
+    if (error) {
+        throw error
+    }
 
-    webpack(webpackConfig, (error, stats) => {
+    webpack(webpackConfig, (err, stats) => {
         spinner.stop()
-        if (error) throw error
+        if (err) {
+            throw err
+        }
         process.stdout.write(stats.toString({
             colors: true,
-            modules.false,
+            modules: false,
             children: false,
             chunks: false,
             chunkModules: false

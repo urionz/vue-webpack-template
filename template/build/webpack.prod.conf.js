@@ -8,13 +8,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 
 const env = require('../config/prod.env')
 
 const webpackConfig = merge(baseWebpackConfig, {
-    modules: {
+    module: {
         rules: utils.styleLoaders({
             sourceMap: config.build.productionSourceMap,
             extract: true,
@@ -116,7 +115,7 @@ const webpackConfig = merge(baseWebpackConfig, {
 if (config.build.productionGzip) {
     const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
-    webpackConfig.plugins.push({
+    webpackConfig.plugins.push(
         new CompressionWebpackPlugin({
             asset: '[path].gz[query]',
             algorithm: 'gzip',
@@ -128,7 +127,7 @@ if (config.build.productionGzip) {
             threshold: 10240,
             minRatio: 0.8
         })
-    })
+    )
 }
 
 if (config.build.bundleAnalyzerReport) {
