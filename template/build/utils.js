@@ -71,7 +71,7 @@ exports.styleLoaders = options => {
     for (const extension in loaders) {
         const loader = loaders[extension]
         output.push({
-            test: new RegExp('\\.' + extension + '$')
+            test: new RegExp('\\.' + extension + '$'),
             use: loader
         })
     }

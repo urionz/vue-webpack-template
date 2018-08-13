@@ -82,7 +82,7 @@ module.exports = new Promise((resolve, reject) => {
                 },
                 onErrors: config.dev.notifyOnErrors ? utils.createNotifierCallback() : undefined
             }))
-            resole(devWebpackConfig)
+            resolve(devWebpackConfig)
         }
     })
 })

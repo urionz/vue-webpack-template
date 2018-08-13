@@ -4,7 +4,7 @@ const sourceMapEnabled = utils.isProduction ? config.build.productionSourceMap :
 
 module.exports = {
     loaders: utils.cssLoaders({
-        sourceMap: sourceMapEnable,
+        sourceMap: sourceMapEnabled,
         extract: utils.isProduction
     }),
     cssSourceMap: sourceMapEnabled,
