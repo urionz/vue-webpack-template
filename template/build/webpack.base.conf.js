@@ -58,6 +58,10 @@ module.exports = {
                 ]
             },
             {
+                test: /\.pug$/,
+                loader: 'pug'
+            },
+            {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
