@@ -2,11 +2,9 @@ const path = require('path')
 const fs = require('fs')
 const spawn = require('child_process').spawn
 
-console.log('spawn....', spawn)
-
 const lintStyles = ['standard', 'airbnb', 'default']
 
-exports.sortDependencies = function (data) {
+exports.sortDependencies = function sortDependencies(data) {
     const packageJsonFile = path.join(
         data.inPlace ? '' : data.destDirName,
         'package.json'
@@ -18,7 +16,7 @@ exports.sortDependencies = function (data) {
     fs.writeFileSync(packageJsonFile, JSON.stringify(packageJson, null, 2) + '\n')
 }
 
-exports.installDependencies = function (cwd, executable = 'npm', color) {
+exports.installDependencies = function installDependencies(cwd, executable = 'npm', color) {
     console.log(`\n\n# ${color('正在安装项目依赖 ...')}`)
     console.log('# ========================\n')
     return runCommand(executable, ['install'], {
@@ -26,7 +24,7 @@ exports.installDependencies = function (cwd, executable = 'npm', color) {
     })
 }
 
-exports.runLintFix = (cwd, data, color) => {
+exports.runLintFix = function runLintFix(cwd, data, color) {
     if (data.lint && lintStyles.indexOf(data.lintConfig) !== -1) {
         console.log(
             `\n\n${color(
@@ -42,7 +40,7 @@ exports.runLintFix = (cwd, data, color) => {
     return Promise.resolve()
 }
 
-exports.printMessage = (data, { green, yellow }) => {
+exports.printMessage = function printMessage(data, { green, yellow }) {
     const message = `
 # ${green('项目初始化完成!')}
 # ========================
@@ -58,13 +56,13 @@ exports.printMessage = (data, { green, yellow }) => {
     console.log(message)
 }
 
-const lintMsg = data => {
+function lintMsg(data) {
     return !data.autoInstall && data.lint && lintStyles.indexOf(data.lintConfig) !== -1
     ? 'npm|cnpm run lint -- --fix (或者使用yarn: yarn run lint --fix)\n ' : ''
 }
 
 
-const installMsg = data => {
+function installMsg(data) {
     return !data.autoInstall ? 'npm|cnpm install (或者使用yarn: yarn)\n ' : ''
 }
 
@@ -90,7 +88,7 @@ function runCommand(cmd, args, options) {
     })
 }
 
-const sortObject = object => {
+function sortObject(object) {
     const sortedObject = {}
     Object.keys(object).sort().forEach(item => {
         sortedObject[item] = object[item]
