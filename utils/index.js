@@ -6,7 +6,7 @@ console.log('spawn....', spawn)
 
 const lintStyles = ['standard', 'airbnb', 'default']
 
-exports.sortDependencies = data => {
+exports.sortDependencies = function (data) {
     const packageJsonFile = path.join(
         data.inPlace ? '' : data.destDirName,
         'package.json'
@@ -18,7 +18,7 @@ exports.sortDependencies = data => {
     fs.writeFileSync(packageJsonFile, JSON.stringify(packageJson, null, 2) + '\n')
 }
 
-exports.installDependencies = (cwd, executable = 'npm', color) => {
+exports.installDependencies = function (cwd, executable = 'npm', color) {
     console.log(`\n\n# ${color('正在安装项目依赖 ...')}`)
     console.log('# ========================\n')
     return runCommand(executable, ['install'], {
