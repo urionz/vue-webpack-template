@@ -66,7 +66,7 @@ const installMsg = data => {
     return !data.autoInstall ? 'npm|cnpm install (或者使用yarn: yarn)\n ' : ''
 }
 
-const runCommand = (cmd, args, ;options) => {
+const runCommand = (cmd, args, options) => {
     return new Promise((resolve, reject) => {
         const spawn = spawn(
             cmd,
