@@ -2,6 +2,8 @@ const path = require('path')
 const fs = require('fs')
 const spawn = require('child_process').spawn
 
+console.log('spawn....', spawn)
+
 const lintStyles = ['standard', 'airbnb', 'default']
 
 exports.sortDependencies = data => {
