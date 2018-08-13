@@ -90,7 +90,6 @@ module.exports = {
     plugins: [
         new HappyPack({
             id: 'vue',
-            cache: false,
             threadPool: happyThreadPool,
             loaders: [
                 {
@@ -101,7 +100,6 @@ module.exports = {
         }),
         new HappyPack({
             id: 'babel',
-            cache: false,
             threadPool: happyThreadPool,
             loaders: [
                 {

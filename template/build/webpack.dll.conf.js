@@ -5,7 +5,7 @@ const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 
 module.exports = {
     entry: {
-        libs: [
+        vendor: [
             'vue/dist/vue.esm.js',
             'vue-router',
             'vuex',

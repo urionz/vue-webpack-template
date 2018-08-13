@@ -45,26 +45,26 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         quiet: true,
         watchOptions: {
             poll: config.dev.poll
-        },
-        plugins: [
-            new webpack.DefinePlugin({
-                'process.env': require('../config/dev.env')
-            }),
-            new webpack.HotModuleReplacementPlugin(),
-            new webpack.NamedModulesPlugin(),
-            new webpack.NoEmitOnErrorsPlugin(),
-            new HtmlWebpackPlugin({
-                filename: 'index.html',
-                template: 'template.html',
-                inject: true
-            }),
-            new CopyWebpackPlugin([
-                from: path.resolve(__dirname, '../dist'),
-                to: config.dev.assetsSubDirectory,
-                ignore: ['.*']
-            ])
-        ]
-    }
+        }
+    },
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env': require('../config/dev.env')
+        }),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: 'template.html',
+            inject: true
+        }),
+        new CopyWebpackPlugin([
+            from: path.resolve(__dirname, '../static'),
+            to: config.dev.assetsSubDirectory,
+            ignore: ['.*']
+        ])
+    ]
 })
 
 module.exports = new Promise((resolve, reject) => {

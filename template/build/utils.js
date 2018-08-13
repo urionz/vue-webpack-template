@@ -3,8 +3,9 @@ const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const packageConfig = require('../package.json')
 
+const isProduction = process.env.NODE_ENV === 'production'
 
-exports.isProduction = process.env.NODE_ENV === 'production'
+exports.isProduction = isProduction
 
 exports.assetsPath = _path => {
     const assetsSubDirectory = isProduction ? config.build.assetsSubDirectory : config.dev.assetsSubDirectory
@@ -32,7 +33,7 @@ exports.cssLoaders = options => {
         const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
 
         if (loader) {
-            loader.push({
+            loaders.push({
                 loader: loader + '-loader',
                 options: Object.assign({}, loaderOptions, {
                     sourceMap: options.sourceMap
