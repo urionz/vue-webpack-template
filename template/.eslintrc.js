@@ -178,7 +178,7 @@ module.exports = {
         "max-params": 0, // 函数最多能有多少个参数
         "max-statements": 0, // 函数内最多有几个声明
         "no-bitwise": 0, // 不允许使用位运算符
-        "no-plusplus": 0 // 不允许使用++ --运算符
+        "no-plusplus": 0, // 不允许使用++ --运算符
         {{/if_eq}}
         {{#if_eq lintConfig "standard"}}
         'generator-star-spacing': 'off', // 允许 async-await
@@ -192,12 +192,12 @@ module.exports = {
         // disallow reassignment of function parameters
         // disallow parameter object manipulation except for specific exclusions
         'no-param-reassign': ['error', {
-        props: true,
-        ignorePropertyModificationsFor: [
-            'state', // for vuex state
-            'acc', // for reduce accumulators
-            'e' // for e.returnvalue
-        ]
+            props: true,
+            ignorePropertyModificationsFor: [
+                'state', // for vuex state
+                'acc', // for reduce accumulators
+                'e' // for e.returnvalue
+            ]
         }],
         // allow optionalDependencies
         'import/no-extraneous-dependencies': ['error', {
