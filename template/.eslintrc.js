@@ -152,7 +152,7 @@ module.exports = {
         "no-multiple-empty-lines": [2, {"max": 2}], // 空行最多不能超过两行
         "no-nested-ternary": 2, // 不允许使用嵌套的三目运算符
         "no-new-object": 2, // 禁止使用new Object()
-        "fun-call-spacing": 2, // 函数调用时，函数名与()之间不能有空格
+        // "fun-call-spacing": 2, // 函数调用时，函数名与()之间不能有空格
         "no-ternary": 0, // 不允许使用三目运算符
         "no-trailing-spaces": 2, // 一行最后不允许有空格
         "no-underscore-dangle": 2, // 不允许标识符以下划线开头
