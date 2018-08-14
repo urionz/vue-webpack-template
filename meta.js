@@ -80,6 +80,14 @@ module.exports = {
             type: 'confirm',
             message: '是否安装Pug(Jade)模板?'
         },
+        lodash: {
+            type: 'confirm',
+            message: '是否安装 loadsh?'
+        },
+        serviceWorker: {
+            type: 'confirm',
+            message: '是否安装serviceWorker?'
+        },
         autoInstall: {
             type: 'list',
             message: '请选择一个依赖安装器',

@@ -5,7 +5,6 @@ const vueLoaderConfig = require('./vue-loader.conf')
 const HappyPack = require('happypack')
 const webpack = require('webpack')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-const PrepackWebpackPlugin = require('prepack-webpack-plugin'}.default
 const os = require('os')
 const happyThreadPool = HappyPack.ThreadPool({
     size: os.cpus().length
@@ -116,8 +115,7 @@ module.exports = {
             context: __dirname,
             manifest: require('./vendor-manifest.json')
         }),
-        new FriendlyErrorsPlugin(),
-        new PrepackWebpackPlugin()
+        new FriendlyErrorsPlugin()
     ],
     node: {
         // prevent webpack from injecting useless setImmediate polyfill because Vue

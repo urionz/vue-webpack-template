@@ -1,6 +1,13 @@
+const fs = require('fs')
 const path = require('path')
+fs.exists(path.resolve(__dirname, '.', 'vendor-manifest.json'), exists => {
+    if (!exists) {
+        return Promise.resolve()
+    }
+})
 const webpack = require('webpack')
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
+
 
 module.exports = {
     entry: {
@@ -8,6 +15,9 @@ module.exports = {
             'vue/dist/vue.esm.js',
             'vue-router',
             'vuex',
+            {{#lodash}}
+            'lodash',
+            {{/lodash}}
             'axios'
         ]
     },

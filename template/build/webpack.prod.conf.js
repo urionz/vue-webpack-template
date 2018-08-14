@@ -9,10 +9,21 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
-const SWPreCacheWebpackPlugin = require('sw-precache-webpack-plugin')
-const loadMinified = require('./load-minified')
-
 const env = require('../config/prod.env')
+{{#serviceWorker}}
+const fs = require('fs')
+const UglifyJS = require('uglify-es')
+const SWPreCacheWebpackPlugin = require('sw-precache-webpack-plugin')
+
+const loadMinified = filePath => {
+    const code = fs.readFileSync(filePath, 'utf-8')
+    const result = UglifyJS.minify(code)
+    if (result.error) {
+        return ''
+    }
+    return result.code
+}
+{{/serviceWorker}}
 
 const webpackConfig = merge(baseWebpackConfig, {
     module: {
@@ -55,9 +66,11 @@ const webpackConfig = merge(baseWebpackConfig, {
                 collapseWhitespace: true,
                 removeAttributeQuotes: true
             },
-            chunksSortMode: 'dependency',
+            {{#serviceWorker}}
             serviceWorkerLoader: `<script>${loadMinified(path.join(__dirname,
-                './service-worker-prod.js'))}</script>`
+                './service-worker-prod.js'))}</script>`,
+            {{/serviceWorker}}
+            chunksSortMode: 'dependency'
         }),
         new ParallelUglifyPlugin({
             cacheDir: '.cache/',
@@ -106,20 +119,22 @@ const webpackConfig = merge(baseWebpackConfig, {
             children: true,
             minChunks: 3
         }),
-        new CopyWebpackPlugin([
-            {
-                from: path.resolve(__dirname, '../static'),
-                to: config.build.assetsSubDirectory,
-                ignore: ['.*']
-            }
-        ]),
+        {{#serviceWorker}}
         new SWPreCacheWebpackPlugin({
             cacheId: '{{ name }}',
             filename: 'service-worker.js',
             staticFileGlobs: ['dist/**/*.{js,html,css,json}'],
             minify: true,
             stripPrefix: 'dist/'
-        })
+        }),
+        {{/serviceWorker}}
+        new CopyWebpackPlugin([
+            {
+                from: path.resolve(__dirname, '../static'),
+                to: config.build.assetsSubDirectory,
+                ignore: ['.*']
+            }
+        ])
     ]
 })
 

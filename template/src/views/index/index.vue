@@ -1,5 +1,7 @@
-<template lang="pug">
-    div#content Hello world
+<template>
+    <div id="content">
+        Hello world
+    </div>
 </template>
 
 <script>

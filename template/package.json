@@ -5,6 +5,8 @@
     "author": "{{ author }}",
     "private": true,
     "scripts": {
+        "predev": "npm run dll",
+        "prebuild": "npm run dll",
         "dev": "node build/dev-server.js",
         "start": "npm run dev",
         "dll": "webpack --config build/webpack.dll.conf.js",
@@ -14,8 +16,9 @@
         "build": "node build/build.js"
     },
     "dependencies": {
-        "eventsource-polyfill": "^0.9.6",
+        {{#lodash}}
         "lodash": "^4.17.10",
+        {{/lodash}}
         "vue": "^2.5.2"{{#router}},
         "vue-router": "^3.0.1"{{/router}},
         "axios": "^0.18.0"{{#vuex}},
@@ -112,13 +115,18 @@
         "webpack-merge": "^4.1.0",
         "sass-loader": "^7.1.0",
         "webpack-parallel-uglify-plugin": "^1.1.0",
+        {{#lint}}
         "pug": "^2.0.3",
         "pug-filters": "^3.1.0",
         "pug-loader": "^2.4.0",
+        {{/lint}}
+        {{#serviceWorker}}
+        "eventsource-polyfill": "^0.9.6",
+        "sw-precache-webpack-plugin": "^0.11.5",
+        {{/serviceWorker}}
         "happypack": "^5.0.0",
         "node-sass": "^4.9.3",
-        "webpack-hot-middleware": "^2.22.3",
-        "sw-precache-webpack-plugin": "^0.11.5"
+        "webpack-hot-middleware": "^2.22.3"
     },
     "engines": {
         "node": ">= 6.0.0",
