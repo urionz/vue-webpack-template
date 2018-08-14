@@ -2,6 +2,7 @@ const path = require('path')
 
 module.exports = {
     dev: {
+        env: require('./dev.env'),
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         proxyTable: {},
@@ -20,6 +21,7 @@ module.exports = {
         cssSourceMap: true
     },
     build: {
+        env: require('./prod.env'),
         index: path.resolve(__dirname, '../dist/index.html'),
         assetsRoot: path.resolve(__dirname, '../dist'),
         assetsSubDirectory: 'static',
