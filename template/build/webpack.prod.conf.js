@@ -9,6 +9,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
+const SWPreCacheWebpackPlugin = require('sw-precache-webpack-plugin')
+const loadMinified = require('./load-minified')
 
 const env = require('../config/prod.env')
 
@@ -53,7 +55,9 @@ const webpackConfig = merge(baseWebpackConfig, {
                 collapseWhitespace: true,
                 removeAttributeQuotes: true
             },
-            chunksSortMode: 'dependency'
+            chunksSortMode: 'dependency',
+            serviceWorkerLoader: `<script>${loadMinified(path.join(__dirname,
+                './service-worker-prod.js'))}</script>`
         }),
         new ParallelUglifyPlugin({
             cacheDir: '.cache/',
@@ -108,7 +112,14 @@ const webpackConfig = merge(baseWebpackConfig, {
                 to: config.build.assetsSubDirectory,
                 ignore: ['.*']
             }
-        ])
+        ]),
+        new SWPreCacheWebpackPlugin({
+            cacheId: '{{ name }}',
+            filename: 'service-worker.js',
+            staticFileGlobs: ['dist/**/*.{js,html,css}'],
+            minify: true,
+            stripPrefix: 'dist/'
+        })
     ]
 })
 

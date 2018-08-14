@@ -6,13 +6,13 @@ const path = require('path')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-const portFinder = require('portfinder')
+const SWPreCacheWebpackPlugin = require('sw-precache-webpack-plugin')
 
-const HOST = process.env.HOST
-const PORT = process.env.PORT && Number(process.env.PORT)
+Object.keys(baseWebpackConfig.entry).forEach(name => {
+    baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
+})
 
-const devWebpackConfig = merge(baseWebpackConfig, {
+module.exports = merge(baseWebpackConfig, {
     module: {
         rules: utils.styleLoaders({
             sourceMap: config.dev.cssSourceMap,
@@ -20,33 +20,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         })
     },
     devtool: config.dev.devtool,
-    devServer: {
-        clientLogLevel: 'warning',
-        historyApiFallback: {
-            rewrites: [
-                {
-                    from: /.*/,
-                    to: path.posix.join(config.dev.assetsPublicPath, 'index.html')
-                }
-            ]
-        },
-        hot: true,
-        contentBase: false,
-        compress: true,
-        host: HOST || config.dev.host,
-        port: PORT || config.dev.port,
-        open: config.dev.autoOpenBrowser,
-        overlay: config.dev.errorOverly ? {
-            warnings: false,
-            errors: true
-        } : false,
-        publicPath: config.dev.assetsPublicPath,
-        proxy: config.dev.proxyTable,
-        quiet: true,
-        watchOptions: {
-            poll: config.dev.poll
-        }
-    },
     plugins: [
         new webpack.DefinePlugin({
             'process.env': require('../config/dev.env')
@@ -57,7 +30,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'template.html',
-            inject: true
+            inject: true,
+            serviceWorkerLoader: `<script>${fs.readFileSync(path.join(__dirname,
+                './service-worker-dev.js'), 'utf-8')}</script>`
         }),
         new CopyWebpackPlugin([
             {
@@ -65,26 +40,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
                 to: config.dev.assetsSubDirectory,
                 ignore: ['.*']
             }
-        ])
+        ]),
+        new SWPreCacheWebpackPlugin({
+            cacheId: '{{ name }}',
+            filename: 'service-worker.js',
+            staticFileGlobs: ['dist/**/*.{js,html,css}'],
+            minify: true,
+            stripPrefix: 'dist/'
+        })
     ]
-})
-
-module.exports = new Promise((resolve, reject) => {
-    portFinder.basePort = process.env.PORT || config.dev.port
-    portFinder.getPort((error, port) => {
-        if (error) {
-            reject(error)
-        } else {
-            process.env.PORT = port
-            devWebpackConfig.devServer.port = port
-
-            devWebpackConfig.plugins.push(new FriendlyErrorsPlugin({
-                compilationSuccessInfo: {
-                    message: [`应用正运行于 http://${devWebpackConfig.devServer.host}:${port}`]
-                },
-                onErrors: config.dev.notifyOnErrors ? utils.createNotifierCallback() : undefined
-            }))
-            resolve(devWebpackConfig)
-        }
-    })
 })

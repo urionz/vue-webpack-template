@@ -1,6 +1,5 @@
 const path = require('path')
 const webpack = require('webpack')
-const config = require('../config')
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 
 module.exports = {
