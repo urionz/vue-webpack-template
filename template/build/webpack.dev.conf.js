@@ -45,7 +45,7 @@ module.exports = merge(baseWebpackConfig, {
         new SWPreCacheWebpackPlugin({
             cacheId: '{{ name }}',
             filename: 'service-worker.js',
-            staticFileGlobs: ['dist/**/*.{js,html,css}'],
+            staticFileGlobs: ['dist/**/*.{js,html,css,json}'],
             minify: true,
             stripPrefix: 'dist/'
         })
